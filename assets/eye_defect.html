@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Eye Defect Detection</title>
+  <style>
+    body {
+      background-image: assets/download.jpg;
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      width: 350px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .image-upload {
+      margin-bottom: 20px;
+    }
+
+    .result {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .disease {
+      color: blue;
+      font-size: 16px;
+    }
+
+    .history-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .history-button input[type="submit"] {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .history-button input[type="submit"]:hover {
+      background-color: #0D47A1;
+    }
+
+    .history-container {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .history-preview {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .history-preview img {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      background-color: #F5F5F5;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .entry p {
+      margin-bottom: 5px;
+    }
+
+    .entry .disease {
+      color: blue;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .reset-button {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .reset-button input[type="submit"] {
+      background-color: #FF5722;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .reset-button input[type="submit"]:hover {
+      background-color: #E64A19;
+    }
+
+    .image {
+      max-width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+      margin-top: 10px;
+    }
+     .result-image {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .result-image img {
+      max-width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  </style>
+  <script>
+    function toggleHistory() {
+  var historyContainer = document.getElementById("history-container");
+  if (historyContainer.style.display === "none" || historyContainer.style.display === "") {
+    historyContainer.style.display = "block";
+  } else {
+    historyContainer.style.display = "none";
+  }
+
+  // Scroll to the history container when showing it
+  if (historyContainer.style.display === "block") {
+    historyContainer.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+  </script>
+</head>
+<body>
+   <div class="container">
+    <div class="header">
+      <h1>Eye Defect Classification</h1>
+    </div>
+    <div class="image-upload">
+      <form id="image-form" action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required>
+        <input type="submit" value="Upload">
+      </form>
+      <form id="url-form" onsubmit="return addImageViaURL()">
+        <input type="url" id="image-url" placeholder="Enter image URL" required>
+        <input type="submit" value="Add via URL">
+      </form>
+    </div>
+    {% if error %}
+      <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if result %}
+      <h2 class="result">Result</h2>
+      <p>{{ result[0] }}</p>
+      <p>Score: {{ result[1] }}</p>
+      {% if result[2] %}
+        <p class="disease">Disease: {{ result[2] }}</p>
+      {% endif %}
+      <div class="result-image">
+        <img src="{{ image_path }}" alt="Uploaded Image" class="image">
+      </div>
+    {% endif %}
+    <div class="history-button">
+      <input type="submit" value="Show History" onclick="toggleHistory()">
+    </div>
+    <div id="history-container" class="history-container">
+      {% if history %}
+        <h2 class="history">History</h2>
+        <div class="history-preview">
+          {% for entry in history %}
+            <div>
+              <img src="{{ entry[0] }}" alt="History Image">
+              <p>Result: {{ entry[1][0] }}</p>
+              <p>Score: {{ entry[1][1] }}</p>
+              {% if entry[1][2] %}
+                <p class="disease">Disease: {{ entry[1][2] }}</p>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form action="/reset" method="post">
+        <input type="submit" value="Reset History">
+      </form>
+    </div>
+  </div>
+</body>
+</html>
