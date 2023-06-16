@@ -15,6 +15,11 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.**
 
+**In this Project:**
+     lib/main.dart file is responsible for  entire project it includes the login page,register page,history,homepage,resultscreen,aboutsection, contact,logout function creation,etc..
+     other than that it trains the pretrained model thatis assets/model.tflite.
+
+     pubspec.yaml is responsible for all the dependencies and assets used
 
 
 
