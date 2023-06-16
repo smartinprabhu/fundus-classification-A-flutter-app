@@ -1,0 +1,21 @@
+name: eye_defect_detection
+description: Eye Defect Detection App
+environment:
+  sdk: '>=2.14.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.3
+  image_picker: ^0.8.4+4
+  path_provider: ^2.0.5
+  url_launcher: ^6.0.12
+flutter:
+  assets:
+    - assets/icons/yuy.png
+    - assets/pic.gif
+    - assets/model.tflite
+    - assets/icons/tut.jpg
+    - assets/download.jpg
+    - assets/upload.png
+  uses-material-design: true
