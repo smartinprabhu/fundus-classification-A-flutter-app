@@ -36,11 +36,6 @@ samples, guidance on mobile development, and a full API reference.**
 <img width="484" alt="Screenshot 2023-06-16 at 7 49 25 PM" src="https://github.com/smartinprabhu/fundus-classification-A-flutter-app/assets/129115470/d0e3c223-e3ea-4edf-aa52-c2d8575f27e2">
 -
 
-**about the development team**
-
-
-  <img width="479" alt="Screenshot 2023-06-16 at 7 49 33 PM" src="https://github.com/smartinprabhu/fundus-classification-A-flutter-app/assets/129115470/1c4ce042-8fd8-4d8c-ac48-9304bce964de">
-
 **some of the obtained results** 
 
 <img width="469" alt="Screenshot 2023-06-16 at 7 49 56 PM" src="https://github.com/smartinprabhu/fundus-classification-A-flutter-app/assets/129115470/83ebdfdd-efe5-4e82-ae74-4af551648bdd">
